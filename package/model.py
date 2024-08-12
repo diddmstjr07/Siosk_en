@@ -1,10 +1,10 @@
 from .neuron import NeuronAggregate
 from google_speech import Speech
-from Siosk.package.anoask import Api
-from Siosk.package.TTS import TextToSpeech
+from Siosk_en.package.anoask import Api
+from Siosk_en.package.TTS import TextToSpeech
 import time
-from Siosk.package.error_manage import ConnectionRefusedError
-from Siosk.package.error_manage import ServerDownedError
+from Siosk_en.package.error_manage import ConnectionRefusedError
+from Siosk_en.package.error_manage import ServerDownedError
 import os
 import six
 import socket
@@ -111,7 +111,7 @@ class API:
         return splited_menu
     
     def logger(self, classified, flag):
-        file_path = 'Siosk/package/log/logger.log'
+        file_path = 'Siosk_en/package/log/logger.log'
         is_empty = True
         with open(file_path, 'r', encoding='utf-8') as file:
             if file.read(1) != "":

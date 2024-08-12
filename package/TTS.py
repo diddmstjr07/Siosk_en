@@ -24,44 +24,73 @@ class Loading:
 
 class TextToSpeech:
     def __init__(self) -> None:
-        self.VOICE = "ko-KR-HyunsuNeural"
+        self.VOICE = "en-US-AndrewMultilingualNeural"
         self.Loading = Loading()
-        if self.VOICE == "ko-KR-HyunsuNeural":
-            self.CHUNK_REMOVE = -1000
-        elif self.VOICE == "ko-KR-InJoonNeural":
-            self.CHUNK_REMOVE = -1000
-        elif self.VOICE == "ko-KR-SunHiNeural":
-            self.CHUNK_REMOVE = -500
     
     """
     --------------------
-    Name: Microsoft Server Speech Text to Speech Voice (ko-KR, HyunsuNeural)
-    ShortName: ko-KR-HyunsuNeural
-    Gender: Male
-    Locale: ko-KR
-    Chunck Removmental Time: [:-500]
-    --------------------
-    Name: Microsoft Server Speech Text to Speech Voice (ko-KR, InJoonNeural)
-    ShortName: ko-KR-InJoonNeural [:-1000]
-    Gender: Male
-    Locale: ko-KR
-    --------------------
-    Name: Microsoft Server Speech Text to Speech Voice (ko-KR, SunHiNeural)
-    ShortName: ko-KR-SunHiNeural
+    Name: en-US-AnaNeural
     Gender: Female
-    Locale: ko-KR
+    --------------------
+    Name: en-US-AndrewMultilingualNeural
+    Gender: Male
+    --------------------
+    Name: en-US-AndrewNeural
+    Gender: Male
+    --------------------
+    Name: en-US-AriaNeural
+    Gender: Female
+    --------------------
+    Name: en-US-AvaMultilingualNeural
+    Gender: Female
+    --------------------
+    Name: en-US-AvaNeural
+    Gender: Female
+    --------------------
+    Name: en-US-BrianMultilingualNeural
+    Gender: Male
+    --------------------
+    Name: en-US-BrianNeural
+    Gender: Male
+    --------------------
+    Name: en-US-ChristopherNeural
+    Gender: Male
+    --------------------
+    Name: en-US-EmmaMultilingualNeural
+    Gender: Female
+    --------------------
+    Name: en-US-EmmaNeural
+    Gender: Female
+    --------------------
+    Name: en-US-EricNeural
+    Gender: Male
+    --------------------
+    Name: en-US-GuyNeural
+    Gender: Male
+    --------------------
+    Name: en-US-JennyNeural
+    Gender: Female
+    --------------------
+    Name: en-US-MichelleNeural
+    Gender: Female
+    --------------------
+    Name: en-US-RogerNeural
+    Gender: Male
+    --------------------
+    Name: en-US-SteffanNeural
+    Gender: Male
     --------------------
     """
     
     async def downloading(self):
-        folder_path = 'Siosk/assets/audio'
+        folder_path = 'Siosk_en/assets/audio'
         if os.path.isdir(folder_path):
             shutil.rmtree(folder_path)
             os.mkdir(folder_path)
         else:
             os.mkdir(folder_path)
         progress_bar, total_steps = self.Loading.setting_progress_bar()
-        with open('Siosk/package/conversation.json', 'r', encoding='utf-8') as file:
+        with open('Siosk_en/package/conversation_en.json', 'r', encoding='utf-8') as file:
             target_datas = json.load(file)
             for target_data_index, target_data_val in enumerate(target_datas):
                 target_data_que = str(target_data_val).split(' | ')[0]
@@ -69,7 +98,7 @@ class TextToSpeech:
                 if '?' or ' ' in target_data_ans:
                     target_data_ans = target_data_ans.replace('?', ";")
                 communicate = edge_tts.Communicate(target_data_ans, self.VOICE)
-                await communicate.save(f"Siosk/assets/audio/{target_data_ans}.mp3")
+                await communicate.save(f"Siosk_en/assets/audio/{target_data_ans}.mp3")
                 self.Loading.update_progress_bar(total_steps, progress_bar, 100 / len(target_datas))
 
     async def voice(
@@ -82,7 +111,7 @@ class TextToSpeech:
         """Main function"""
         if flag == True: 
             print("Audio Usage")
-            audio = AudioSegment.from_file(resultment, format="mp3")[:self.CHUNK_REMOVE]
+            audio = AudioSegment.from_file(resultment, format="mp3")
             play(audio)
         elif flag == False:
             communicate = edge_tts.Communicate(target, self.VOICE)
@@ -91,7 +120,7 @@ class TextToSpeech:
                 if chunk["type"] == "audio":
                     audio_data += chunk["data"]
             try:
-                await play(AudioSegment.from_file(BytesIO(audio_data), format="mp3")[:self.CHUNK_REMOVE])
+                await play(AudioSegment.from_file(BytesIO(audio_data), format="mp3"))
             except:
                 pass
 
