@@ -1,11 +1,12 @@
-from pydub import AudioSegment
-from pydub.playback import play
+import ctypes
+import time
 from tqdm import tqdm
 import json
 import shutil
 import os
 import edge_tts
-from io import BytesIO
+import tempfile
+from auto.voice import play_wav
 
 class Loading:
     def __init__(self) -> None:
@@ -26,6 +27,7 @@ class TextToSpeech:
     def __init__(self) -> None:
         self.VOICE = "en-US-AndrewMultilingualNeural"
         self.Loading = Loading()
+        
     
     """
     --------------------
@@ -98,7 +100,7 @@ class TextToSpeech:
                 if '?' or ' ' in target_data_ans:
                     target_data_ans = target_data_ans.replace('?', ";")
                 communicate = edge_tts.Communicate(target_data_ans, self.VOICE)
-                await communicate.save(f"Siosk_en/assets/audio/{target_data_ans}.mp3")
+                await communicate.save(f"Siosk_en/assets/audio/{target_data_ans}.wav")
                 self.Loading.update_progress_bar(total_steps, progress_bar, 100 / len(target_datas))
 
     async def voice(
@@ -110,18 +112,16 @@ class TextToSpeech:
 
         """Main function"""
         if flag == True: 
-            print("Audio Usage")
-            audio = AudioSegment.from_file(resultment, format="mp3")
-            play(audio)
+            play_wav(resultment)
         elif flag == False:
             communicate = edge_tts.Communicate(target, self.VOICE)
             audio_data = b""
             async for chunk in communicate.stream():
                 if chunk["type"] == "audio":
                     audio_data += chunk["data"]
-            try:
-                await play(AudioSegment.from_file(BytesIO(audio_data), format="mp3"))
-            except:
-                pass
+            with tempfile.NamedTemporaryFile(delete=False, suffix='.wav') as temp_file:
+                temp_file.write(audio_data)
+                temp_file_path = temp_file.name
+            play_wav(temp_file_path)
 
 

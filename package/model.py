@@ -67,7 +67,7 @@ class API:
             os._exit(0) # 문자의 종류가 str이 아닌 경우 exit
 
     def detection(self, ques:str, result:str, flag:str): # API로부터 반환되어진 result 값을 인자로
-        filename = str("Siosk/assets/audio/" + result.replace('?', ";") + ".mp3") # file name creation
+        filename = str("Siosk/assets/audio/" + result.replace('?', ";") + ".wav") # file name creation
         file_path = os.path.abspath(filename)
         if os.path.exists(file_path): # 있다면,
             print(file_path)
@@ -77,33 +77,21 @@ class API:
         
     def classifying(self, Q:str, F):
         if F == '3':
-            splited_menu = Q.split(" 줄래?")[0]
+            splited_menu = Q.split("Give me a ")[1]
         elif F == '4':
-            splited_menu = str(Q.split(" 줘")[0])[0]
-            if splited_menu == "한":
-                splited_menu = '1'
-            elif splited_menu == "두":
-                splited_menu = '2'
-            elif splited_menu == "세":
-                splited_menu = '3'
-            elif splited_menu == "네":
-                splited_menu = '4'
-            elif splited_menu == "다":
-                splited_menu = '5'
-            elif splited_menu == "여":
-                splited_menu = '6'
+            splited_menu = Q.split("Give me ")[1]
         elif F == '5':
-            if Q == "차갑게 줘":
+            if Q == "Give it to me cold":
                 splited_menu = "Cold"
-            elif Q == "따뜻하게 줘":
+            elif Q == "Give it to me warm":
                 splited_menu = "Warm"
         elif F == '6':
-            if Q == "네" or Q == "어" or Q == "그래" or Q == "넣어줘" or Q == "장바구니에 넣어줘":
+            if Q == "Yes" or Q == "Uh" or Q == "Okay" or Q == "Add it to the cart" or Q == "Add it to the cart":
                 splited_menu = True
             else:
                 splited_menu = False
         elif F == '7':
-            if Q == '주문할게' or Q == '결제할게' or Q == '취소할게':
+            if Q == 'I will order' or Q == 'I will pay' or Q == 'I will cancel':
                 splited_menu = "order"
         else:
             splited_menu = Q
