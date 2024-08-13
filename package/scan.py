@@ -50,6 +50,14 @@ def unix_track(port):
             return False, processer
     else:
         return True, processer
+    
+def linux_track(port):
+    result = subprocess.check_output(['lsof', '-i', f':{port}'])
+    result = result.decode('utf-8').strip().split('\n')
+    if len(result) > 1:
+        return f"Python | PID"
+    else:
+        return True, "None"
 
 def find_process_by_port(port):
     try:
@@ -92,11 +100,16 @@ def find_process_by_port_Voice(port):
                     return_data, processer = windows_track(port)
                 except ValueError:
                     return_data = windows_track(port)
-        else:
+        elif os_system == "Darwin":
                 try:
                     return_data, processer = unix_track(port)
                 except ValueError:
                     return_data = unix_track(port)
+        elif os_system == "Linux":
+                try:
+                    return_data, processer = linux_track(port)
+                except ValueError:
+                    return_data = linux_track(port)
         
         if return_data == False:
             print("\033[1;31m" + "ERROR" + "\033[0m" + ":" + f"     Is there any process is working on Port 9460? | {processer} is running currently")
