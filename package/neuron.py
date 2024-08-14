@@ -21,15 +21,15 @@ class NeuronAggregate:
         # for i in range(len(micro_result)):
         #     if "MacBook Pro 마이크" in micro_result[i]:
         #         return int(str(micro_result[i])[1])
-        print("\n-----------------------------------")
-        for i in range(len(micro_result)): 
-            print(micro_result[i]) # 마이크 정보 출력
-        print("-----------------------------------\n")
+        # print("\n-----------------------------------")
+        # for i in range(len(micro_result)): 
+        #     print(micro_result[i]) # 마이크 정보 출력
+        # print("-----------------------------------\n")
         while True:
             try:
-                index = int(input("Please Select Microphone and Type number of index: "))
-                self.os.system(clear_terminal())
-                return index # 선택한 인덱스 반환
+                # index = int(input("Please Select Microphone and Type number of index: "))
+                # self.os.system(clear_terminal())
+                return 1 # 선택한 인덱스 반환
             except ValueError:
                 print("\033[31m" + "ERROR" + "\033[0m" + ": " "     Please type only integer texture")
 

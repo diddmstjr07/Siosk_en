@@ -118,20 +118,20 @@ def find_process_by_port_Voice(port):
             result_data =  f'No process found using port {port}'
             print("\033[1;32m" + "INFO" + "\033[0m" + ":" + f"     {result_data}")
             print("\033[1;32m" + "INFO" + "\033[0m" + ":" + f"     Directing...")
-            time.sleep(3)
+            time.sleep(1)
             return False
         else:
             process_name, pid = str(return_data).split(" | ")
             result_data = f'1 process found using port http://127.0.0.1:9460 name: {process_name}, PID: {pid}'
             print("\033[1;32m" + "INFO" + "\033[0m" + ":" + f"     {result_data}")
             print("\033[1;32m" + "INFO" + "\033[0m" + ":" + f"     Directing...")
-            time.sleep(3)
+            time.sleep(1)
             return True
         
     except subprocess.CalledProcessError:
         result_data =  f'No process found using port {port}'
         print("\033[1;32m" + "INFO" + "\033[0m" + ":" + f"     {result_data}")
         print("\033[1;32m" + "INFO" + "\033[0m" + ":" + f"     Directing...")
-        time.sleep(3)
+        time.sleep(1)
         return False
 

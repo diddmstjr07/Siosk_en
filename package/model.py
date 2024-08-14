@@ -18,26 +18,26 @@ class API:
         self.url = url # Sending url
         self.TextToSpeech = TextToSpeech()
 
-    def access_server(self):
-        start_time = time.time()
-        try:
-            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            sock.connect(("pwnbit.kr", 443))
-            response = requests.get(f"{self.url}:9460/access?token={self.token}&host={os.getlogin()}&ip={sock.getsockname()[0]}", verify=False) # 쿼리문자열을 활용한 Get 요청을 보냄 
-            result = response.json()['message'] # json 데이터로 추출하여 detail 키에 대한 값을 변수에 저장
-            if result == 'error': # 토큰이 부적절한 경우 에러 메세지를 띄움
-                webbrowser.open(self.url)
-                print("\033[31m" + '403 Refused Error' + "\033[0m" + ': None Coincide Token values, Please check if your token is expired')
-                print('to get new token, please visit https://anoask.site and login to issue')
-                raise ConnectionRefusedError
-        except KeyError: # 키에러인 경우, 적절하게 반환된 결과이기 때문에, 추출
-            result = response.json()['message'] # 결과 추출
-            end_time = time.time() # 종료
-            embedding_time = end_time - start_time # 임배디드 시간 측정
-            return result, embedding_time # 결과나 임배디드 시간 반환
-        except requests.exceptions.ConnectionError:
-            print("\033[31m" + '404 Refused Error' + "\033[0m" + ': Server is downed... Please Contact us we will found problem immediately') # 연결 에러인 경우, 서버 다운 메세지 출력
-            raise ServerDownedError
+    # def access_server(self):
+    #     start_time = time.time()
+    #     try:
+    #         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    #         sock.connect(("pwnbit.kr", 443))
+    #         response = requests.get(f"{self.url}:9460/access?token={self.token}&host={os.getlogin()}&ip={sock.getsockname()[0]}", verify=False) # 쿼리문자열을 활용한 Get 요청을 보냄 
+    #         result = response.json()['message'] # json 데이터로 추출하여 detail 키에 대한 값을 변수에 저장
+    #         if result == 'error': # 토큰이 부적절한 경우 에러 메세지를 띄움
+    #             webbrowser.open(self.url)
+    #             print("\033[31m" + '403 Refused Error' + "\033[0m" + ': None Coincide Token values, Please check if your token is expired')
+    #             print('to get new token, please visit https://anoask.site and login to issue')
+    #             raise ConnectionRefusedError
+    #     except KeyError: # 키에러인 경우, 적절하게 반환된 결과이기 때문에, 추출
+    #         result = response.json()['message'] # 결과 추출
+    #         end_time = time.time() # 종료
+    #         embedding_time = end_time - start_time # 임배디드 시간 측정
+    #         return result, embedding_time # 결과나 임배디드 시간 반환
+    #     except requests.exceptions.ConnectionError:
+    #         print("\033[31m" + '404 Refused Error' + "\033[0m" + ': Server is downed... Please Contact us we will found problem immediately') # 연결 에러인 경우, 서버 다운 메세지 출력
+    #         raise ServerDownedError
 
     def load_models(self):
         api = Api(url=self.url) 
