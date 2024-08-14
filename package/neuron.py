@@ -1,5 +1,6 @@
 from .converter import SpeechToTextConverter
 from auto.clear_terminal import clear_terminal
+import os
 
 class NeuronAggregate:
     def __init__(self) -> None:
@@ -20,7 +21,8 @@ class NeuronAggregate:
         micro_result = self.converter.check_microphone() # 반환한 마이크 배열 데이터를 변수에 저장
         for i in range(len(micro_result)):
             if "Mic" or "mic" or "마이크" in micro_result[i]:
-                print(micro_result[i])
+                os.system(clear_terminal())
+                print("\033[1;32m" + "INFO" + "\033[0m" + ":" + f"     Mic Infor: {micro_result[i]}")
                 return int(str(micro_result[i])[1])
         print("\n-----------------------------------")
         for i in range(len(micro_result)): 

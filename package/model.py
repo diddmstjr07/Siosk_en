@@ -115,8 +115,8 @@ class API:
         self.keyword = self.Neuron.Trans(self.index) # 음성 정보를 keyword로써 변환후 변수에 저장
         print(self.keyword) # 단어 출력
         Q, A, F, embedding_time = self.api.send_response(self.token, self.keyword) # 위에서 매개변수로 삼은 token과 받은 keyword를 매개변수로써 전송
-        print(embedding_time) # 시간 출력
-        print("Talking...")
+        print("\033[33m" + "\nLOG" + "\033[0m" + ":" + f"     Talking...")
+        print("\033[33m" + "LOG" + "\033[0m" + ":" + f"     Embedded time: {embedding_time}")
         classified = self.classifying(Q, F)
         self.logger(classified=classified, flag=F)
         self.detection(Q, A, F) # detection 함수 호출 여기가 말하는 부분 TTS

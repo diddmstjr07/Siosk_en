@@ -21,9 +21,7 @@ class Api: # Server Connection
                 print('to get new token, please visit https://anoask.site and login to issue')
                 raise ConnectionRefusedError
         except KeyError: # 키에러인 경우, 적절하게 반환된 결과이기 때문에, 추출
-            print(response)
             result = response.json()['message'] # 결과 추출
-            print(result)
             Q = str(result).split(" | ")[0]
             A = str(result).split(" | ")[1]
             F = str(result).split(" | ")[2]

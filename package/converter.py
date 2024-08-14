@@ -21,19 +21,18 @@ class SpeechToTextConverter:
             mic = self.detection.Microphone(device_index=index)
             with mic as source:
                 self.detector.dynamic_energy_threshold = True
-                print("Listening...") 
+                print("\033[33m" + "\nLOG" + "\033[0m" + ":" + f"     None Voice Detected")
                 while True:  # 무한 루프로 음성 감지 시도
                     try:
                         stra = time.time()
                         audio = self.detector.listen(source, timeout=1.5, phrase_time_limit=3)  # 1.5초 동안만 듣기 시도
-                        result = self.detector.recognize_google(audio, language="ko-KR") # google_google: ko-KR, whisper: ko
+                        result = self.detector.recognize_google(audio, language="en-US") # google_google: ko-KR, whisper: ko
                         print("Embbedd time: " + str(time.time() - stra))
                         return result
                     except self.error_non:
-                        print("None Voice Detected")
+                        print("\033[33m" + "LOG" + "\033[0m" + ":" + f"     None Voice Detected")
                     except self.error_wait:
-                        print("Timeout Detected")
+                        print("\033[33m" + "LOG" + "\033[0m" + ":" + f"     None Voice Detected")
         except Exception as e:
             print("\033[1;91m" + "ERROR" + "\033[0m" + ":" + f"     Please Check your selection if mic is speaker (마이크가 아닌 스피커를 선택하였는지 확인해주십시오)")
-            print("exiting...")
             os._exit(0)
